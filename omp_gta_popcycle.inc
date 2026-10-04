@@ -4,80 +4,45 @@
 #define _omp_gta_popcycle_included
 
 #define GTA_POPCYCLE_TYPE_COUNT (20)
-#define GTA_POPCYCLE_DAY_COUNT (2)
+#define GTA_POPCYCLE_DAY_TYPE_COUNT (2)
 #define GTA_POPCYCLE_TIME_COUNT (12)
-#define GTA_POPCYCLE_FIELD_COUNT (24)
-
-#define GTA_POPCYCLE_WEEKDAY (0)
-#define GTA_POPCYCLE_WEEKEND (1)
-
-#define GTA_POPCYCLE_00_00 (0)
-#define GTA_POPCYCLE_02_00 (1)
-#define GTA_POPCYCLE_04_00 (2)
-#define GTA_POPCYCLE_06_00 (3)
-#define GTA_POPCYCLE_08_00 (4)
-#define GTA_POPCYCLE_10_00 (5)
-#define GTA_POPCYCLE_12_00 (6)
-#define GTA_POPCYCLE_14_00 (7)
-#define GTA_POPCYCLE_16_00 (8)
-#define GTA_POPCYCLE_18_00 (9)
-#define GTA_POPCYCLE_20_00 (10)
-#define GTA_POPCYCLE_22_00 (11)
-
-#define GTA_POPCYCLE_TYPE_BUSINESS (0)
-#define GTA_POPCYCLE_TYPE_DESERT (1)
-#define GTA_POPCYCLE_TYPE_ENTERTAINMENT (2)
-#define GTA_POPCYCLE_TYPE_COUNTRYSIDE (3)
-#define GTA_POPCYCLE_TYPE_RESIDENTIAL_RICH (4)
-#define GTA_POPCYCLE_TYPE_RESIDENTIAL_AVERAGE (5)
-#define GTA_POPCYCLE_TYPE_RESIDENTIAL_POOR (6)
-#define GTA_POPCYCLE_TYPE_GANGLAND (7)
-#define GTA_POPCYCLE_TYPE_BEACH (8)
-#define GTA_POPCYCLE_TYPE_SHOPPING (9)
-#define GTA_POPCYCLE_TYPE_PARK (10)
-#define GTA_POPCYCLE_TYPE_INDUSTRY (11)
-#define GTA_POPCYCLE_TYPE_ENTERTAINMENT_BUSY (12)
-#define GTA_POPCYCLE_TYPE_SHOPPING_BUSY (13)
-#define GTA_POPCYCLE_TYPE_SHOPPING_POSH (14)
-#define GTA_POPCYCLE_TYPE_RESIDENTIAL_RICH_SECLUDED (15)
-#define GTA_POPCYCLE_TYPE_AIRPORT (16)
-#define GTA_POPCYCLE_TYPE_GOLF_CLUB (17)
-#define GTA_POPCYCLE_TYPE_OUT_OF_TOWN_FACTORY (18)
-#define GTA_POPCYCLE_TYPE_AIRPORT_RUNWAY (19)
+#define GTA_POPCYCLE_VALUE_COUNT (24)
+#define GTA_POPCYCLE_ROW_COUNT (GTA_POPCYCLE_TYPE_COUNT * GTA_POPCYCLE_DAY_TYPE_COUNT * GTA_POPCYCLE_TIME_COUNT)
 
 #define GTA_POPCYCLE_FILE "popcycle.dat"
 #define GTA_POPCYCLE_MAX_LINE_LENGTH (512)
 #define GTA_POPCYCLE_MAX_COMMENT_LENGTH (128)
 #define GTA_POPCYCLE_MAX_TOKEN_LENGTH (64)
 
-enum E_GTA_POPCYCLE_FIELD {
-    PC_PEDS,
-    PC_CARS,
-    PC_DEALERS,
-    PC_GANG,
-    PC_COPS,
-    PC_OTHER,
-    PC_WORKERS,
-    PC_BUSINESS,
-    PC_CLUBBERS,
-    PC_FARMERS,
-    PC_BEACHFOLK,
-    PC_PARKFOLK,
-    PC_CASUAL_RICH,
-    PC_CASUAL_AVERAGE,
-    PC_CASUAL_POOR,
-    PC_PROZZIES,
-    PC_CRIMIMALS,
-    PC_GOLFERS,
-    PC_SERVANTS,
-    PC_AIRCREW,
-    PC_ENTERTAINERS,
-    PC_OOT_FACT,
-    PC_DESERTFOLK,
-    PC_AIRCREW_RUNWAY
+enum E_GTA_POPCYCLE_VALUE {
+    GTA_POPCYCLE_VALUE_UNKNOWN = -1,
+    GTA_POPCYCLE_VALUE_PEDS = 0,
+    GTA_POPCYCLE_VALUE_CARS,
+    GTA_POPCYCLE_VALUE_DEALERS,
+    GTA_POPCYCLE_VALUE_GANG,
+    GTA_POPCYCLE_VALUE_COPS,
+    GTA_POPCYCLE_VALUE_OTHER,
+    GTA_POPCYCLE_VALUE_WORKERS,
+    GTA_POPCYCLE_VALUE_BUSINESS,
+    GTA_POPCYCLE_VALUE_CLUBBERS,
+    GTA_POPCYCLE_VALUE_FARMERS,
+    GTA_POPCYCLE_VALUE_BEACHFOLK,
+    GTA_POPCYCLE_VALUE_PARKFOLK,
+    GTA_POPCYCLE_VALUE_CASUAL_RICH,
+    GTA_POPCYCLE_VALUE_CASUAL_AVERAGE,
+    GTA_POPCYCLE_VALUE_CASUAL_POOR,
+    GTA_POPCYCLE_VALUE_PROSTITUTES,
+    GTA_POPCYCLE_VALUE_CRIMINALS,
+    GTA_POPCYCLE_VALUE_GOLFERS,
+    GTA_POPCYCLE_VALUE_SERVANTS,
+    GTA_POPCYCLE_VALUE_AIRCREW,
+    GTA_POPCYCLE_VALUE_ENTERTAINERS,
+    GTA_POPCYCLE_VALUE_OUT_OF_TOWN_FACTORY,
+    GTA_POPCYCLE_VALUE_DESERTFOLK,
+    GTA_POPCYCLE_VALUE_AIRCREW_RUNWAY
 };
 
-enum E_GTA_POPULATION_DAY {
+enum E_GTA_POPCYCLE_DAY {
     GTA_POPCYCLE_DAY_MONDAY = 0,
     GTA_POPCYCLE_DAY_TUESDAY,
     GTA_POPCYCLE_DAY_WEDNESDAY,
@@ -87,14 +52,61 @@ enum E_GTA_POPULATION_DAY {
     GTA_POPCYCLE_DAY_SUNDAY
 };
 
-static gPopCycle[GTA_POPCYCLE_TYPE_COUNT][GTA_POPCYCLE_DAY_COUNT][GTA_POPCYCLE_TIME_COUNT][E_GTA_POPCYCLE_FIELD];
+enum E_GTA_POPCYCLE_TYPE {
+    GTA_POPCYCLE_TYPE_UNKNOWN = -1,
+    GTA_POPCYCLE_TYPE_BUSINESS = 0,
+    GTA_POPCYCLE_TYPE_DESERT,
+    GTA_POPCYCLE_TYPE_ENTERTAINMENT,
+    GTA_POPCYCLE_TYPE_COUNTRYSIDE,
+    GTA_POPCYCLE_TYPE_RESIDENTIAL_RICH,
+    GTA_POPCYCLE_TYPE_RESIDENTIAL_AVERAGE,
+    GTA_POPCYCLE_TYPE_RESIDENTIAL_POOR,
+    GTA_POPCYCLE_TYPE_GANGLAND,
+    GTA_POPCYCLE_TYPE_BEACH,
+    GTA_POPCYCLE_TYPE_SHOPPING,
+    GTA_POPCYCLE_TYPE_PARK,
+    GTA_POPCYCLE_TYPE_INDUSTRY,
+    GTA_POPCYCLE_TYPE_ENTERTAINMENT_BUSY,
+    GTA_POPCYCLE_TYPE_SHOPPING_BUSY,
+    GTA_POPCYCLE_TYPE_SHOPPING_POSH,
+    GTA_POPCYCLE_TYPE_RESIDENTIAL_RICH_SECLUDED,
+    GTA_POPCYCLE_TYPE_AIRPORT,
+    GTA_POPCYCLE_TYPE_GOLF_CLUB,
+    GTA_POPCYCLE_TYPE_OUT_OF_TOWN_FACTORY,
+    GTA_POPCYCLE_TYPE_AIRPORT_RUNWAY
+};
+
+enum E_GTA_POPCYCLE_DAY_TYPE {
+    GTA_POPCYCLE_DAY_UNKNOWN = -1,
+    GTA_POPCYCLE_WEEKDAY = 0,
+    GTA_POPCYCLE_WEEKEND
+};
+
+enum E_GTA_POPCYCLE_TIME {
+    GTA_POPCYCLE_TIME_UNKNOWN = -1,
+    GTA_POPCYCLE_00_00 = 0,
+    GTA_POPCYCLE_02_00,
+    GTA_POPCYCLE_04_00,
+    GTA_POPCYCLE_06_00,
+    GTA_POPCYCLE_08_00,
+    GTA_POPCYCLE_10_00,
+    GTA_POPCYCLE_12_00,
+    GTA_POPCYCLE_14_00,
+    GTA_POPCYCLE_16_00,
+    GTA_POPCYCLE_18_00,
+    GTA_POPCYCLE_20_00,
+    GTA_POPCYCLE_22_00
+};
+
+
+static gPopCycle[GTA_POPCYCLE_TYPE_COUNT][GTA_POPCYCLE_DAY_TYPE_COUNT][GTA_POPCYCLE_TIME_COUNT][E_GTA_POPCYCLE_VALUE];
 static bool:gPopCycleLoaded;
 
 /*
 * To match GTA:SA style popcycles we need some kind of way to track days, for this to work properly we need to "tap in" into existing clock system
 */
-static E_GTA_POPULATION_DAY:gPopulationDayOfWeek = GTA_POPCYCLE_DAY_MONDAY;
-static gPopulationLastHour = -1;
+static E_GTA_POPCYCLE_DAY:gPopCycleDayOfWeek = GTA_POPCYCLE_DAY_MONDAY;
+static gPopCycleLastHour = -1;
 
 static stock bool:PopCycle_IsLineEmpty(const line[]) {
     new length = strlen(line);
@@ -130,11 +142,11 @@ static stock bool:PopCycle_GetCommentText(const line[], output[], outputSize) {
     return true;
 }
 
-static stock PopCycle_GetTypeFromLine(const line[]) {
+static stock E_GTA_POPCYCLE_TYPE:PopCycle_GetTypeFromLine(const line[]) {
     new section[GTA_POPCYCLE_MAX_COMMENT_LENGTH];
 
     if(!PopCycle_GetCommentText(line, section, sizeof(section)))
-        return -1;
+        return GTA_POPCYCLE_TYPE_UNKNOWN;
 
     new token[GTA_POPCYCLE_MAX_TOKEN_LENGTH];
     new source = 0;
@@ -213,11 +225,23 @@ static stock PopCycle_GetTypeFromLine(const line[]) {
     if(!strcmp(token, "AIRPORT_RUNWAY", true))
         return GTA_POPCYCLE_TYPE_AIRPORT_RUNWAY;
 
-    return -1;
+    return GTA_POPCYCLE_TYPE_UNKNOWN;
 }
 
-static stock bool:PopCycle_ParseRow(const line[], popType, dayType, timeSlot) {
-    new values[GTA_POPCYCLE_FIELD_COUNT];
+static stock PopCycle_Clear() {
+    for(new popType = 0; popType < GTA_POPCYCLE_TYPE_COUNT; popType++) {
+        for(new dayType = 0; dayType < GTA_POPCYCLE_DAY_TYPE_COUNT; dayType++) {
+            for(new timeSlot = 0; timeSlot < GTA_POPCYCLE_TIME_COUNT; timeSlot++) {
+                for(new value = 0; value < GTA_POPCYCLE_VALUE_COUNT; value++) {
+                    gPopCycle[popType][dayType][timeSlot][E_GTA_POPCYCLE_VALUE:value] = 0;
+                }
+            }
+        }
+    }
+}
+
+static stock bool:PopCycle_ParseRow(const line[], E_GTA_POPCYCLE_TYPE:popType, E_GTA_POPCYCLE_DAY_TYPE:dayType, E_GTA_POPCYCLE_TIME:timeSlot) {
+    new values[GTA_POPCYCLE_VALUE_COUNT];
     new count = 0;
     new length = strlen(line);
     new position = 0;
@@ -229,7 +253,7 @@ static stock bool:PopCycle_ParseRow(const line[], popType, dayType, timeSlot) {
         if(position >= length)
             break;
 
-        if(line[position] == '/')
+        if(line[position] == '/' && position + 1 < length && line[position + 1] == '/')
             break;
 
         new value = 0;
@@ -250,78 +274,28 @@ static stock bool:PopCycle_ParseRow(const line[], popType, dayType, timeSlot) {
         if(!foundDigit)
             return false;
 
-        if(count >= GTA_POPCYCLE_FIELD_COUNT)
+        if(count >= GTA_POPCYCLE_VALUE_COUNT)
             return false;
 
         values[count++] = value * sign;
     }
 
-    if(count != GTA_POPCYCLE_FIELD_COUNT)
+    if(count != GTA_POPCYCLE_VALUE_COUNT)
         return false;
 
-    for(new i = 0; i < GTA_POPCYCLE_FIELD_COUNT; i++)
-        gPopCycle[popType][dayType][timeSlot][E_GTA_POPCYCLE_FIELD:i] = values[i];
+    for(new i = 0; i < GTA_POPCYCLE_VALUE_COUNT; i++)
+        gPopCycle[_:popType][_:dayType][_:timeSlot][E_GTA_POPCYCLE_VALUE:i] = values[i];
 
     return true;
 }
 
-static stock bool:PopCycle_ValidatePreviousDay(currentType, currentDay, currentSlot) {
-    if(currentType != -1 && currentDay != -1 && currentSlot != GTA_POPCYCLE_TIME_COUNT) {
-        printf("[omp-gta-popcycle] Invalid row count: type=%d day=%d rows=%d expected=%d", currentType, currentDay, currentSlot, GTA_POPCYCLE_TIME_COUNT);
+static stock bool:PopCycle_ValidatePreviousDay(E_GTA_POPCYCLE_TYPE:currentType, E_GTA_POPCYCLE_DAY_TYPE:currentDay, currentSlot) {
+    if(currentType != GTA_POPCYCLE_TYPE_UNKNOWN && currentDay != GTA_POPCYCLE_DAY_UNKNOWN && currentSlot != GTA_POPCYCLE_TIME_COUNT) {
+        printf("[omp-gta-popcycle] Invalid row count: type=%d day=%d rows=%d expected=%d", _:currentType, _:currentDay, currentSlot, GTA_POPCYCLE_TIME_COUNT);
         return false;
     }
+
     return true;
-}
-
-/*
-* Recreation of CPopCycle::Initialise(), sort of, part of it
-*/
-static stock PopCycle_NormalizePedWeights(popType, dayType, timeSlot) {
-    new total = 0;
-
-
-    for(new E_GTA_POPCYCLE_FIELD:group = PC_WORKERS; group <= PC_AIRCREW_RUNWAY; group++) {
-        total += gPopCycle[popType][dayType][timeSlot][group];
-    }
-
-    if(total <= 0) {
-        return;
-    }
-
-    if(total == 100) {
-        return;
-    }
-
-    new Float:scale = 100.0 / float(total);
-
-    new normalizedTotal = 0;
-    new largestWeight = -1;
-    new E_GTA_POPCYCLE_FIELD:largestGroup = PC_WORKERS;
-
-    for(new E_GTA_POPCYCLE_FIELD:group = PC_WORKERS; group <= PC_AIRCREW_RUNWAY; group++) {
-        new weight = floatround(float(gPopCycle[popType][dayType][timeSlot][group]) * scale, floatround_round);
-
-        gPopCycle[popType][dayType][timeSlot][group] = weight;
-
-        normalizedTotal += weight;
-
-        if(weight >= largestWeight) {
-            largestWeight = weight;
-            largestGroup = group;
-        }
-    }
-
-    gPopCycle[popType][dayType][timeSlot][largestGroup] += 100 - normalizedTotal;
-}
-
-static stock PopCycle_NormalizeAllPedWeights() {
-    for(new popType = 0; popType < GTA_POPCYCLE_TYPE_COUNT; popType++) {
-        for(new dayType = 0; dayType < GTA_POPCYCLE_DAY_COUNT; dayType++) {
-            for(new timeSlot = 0; timeSlot < GTA_POPCYCLE_TIME_COUNT; timeSlot++) {
-                PopCycle_NormalizePedWeights(popType, dayType, timeSlot);
-            }
-        }
-    }
 }
 
 /*
@@ -332,6 +306,7 @@ static stock PopCycle_NormalizeAllPedWeights() {
 
 stock bool:LoadPopCycleDat() {
     gPopCycleLoaded = false;
+    PopCycle_Clear();
 
     new File:file = fopen(GTA_POPCYCLE_FILE, io_read);
 
@@ -341,9 +316,14 @@ stock bool:LoadPopCycleDat() {
     }
 
     new line[GTA_POPCYCLE_MAX_LINE_LENGTH];
-    new currentType = -1;
-    new currentDay = -1;
+
+    new E_GTA_POPCYCLE_TYPE:currentType = GTA_POPCYCLE_TYPE_UNKNOWN;
+    new E_GTA_POPCYCLE_DAY_TYPE:currentDay = GTA_POPCYCLE_DAY_UNKNOWN;
     new currentSlot = 0;
+    new loadedRows = 0;
+
+    new bool:loadedDays[GTA_POPCYCLE_TYPE_COUNT][GTA_POPCYCLE_DAY_TYPE_COUNT];
+    new bool:loadedTypes[GTA_POPCYCLE_TYPE_COUNT];
 
     while(fread(file, line)) {
         new length = strlen(line);
@@ -354,16 +334,27 @@ stock bool:LoadPopCycleDat() {
         if(PopCycle_IsLineEmpty(line))
             continue;
 
-        new detectedType = PopCycle_GetTypeFromLine(line);
+        new E_GTA_POPCYCLE_TYPE:detectedType = PopCycle_GetTypeFromLine(line);
 
-        if(detectedType != -1) {
+        if(detectedType != GTA_POPCYCLE_TYPE_UNKNOWN) {
             if(!PopCycle_ValidatePreviousDay(currentType, currentDay, currentSlot)) {
                 fclose(file);
                 return false;
             }
 
+            if(loadedTypes[_:detectedType]) {
+                printf(
+                    "[omp-gta-popcycle] Duplicate population type: type=%d",
+                    _:detectedType
+                );
+                fclose(file);
+                return false;
+            }
+
+            loadedTypes[_:detectedType] = true;
+
             currentType = detectedType;
-            currentDay = -1;
+            currentDay = GTA_POPCYCLE_DAY_UNKNOWN;
             currentSlot = 0;
             continue;
         }
@@ -377,28 +368,56 @@ stock bool:LoadPopCycleDat() {
                     return false;
                 }
 
-                currentDay = !strcmp(comment, "Weekday", true) ? GTA_POPCYCLE_WEEKDAY : GTA_POPCYCLE_WEEKEND;
+                if(currentType == GTA_POPCYCLE_TYPE_UNKNOWN) {
+                    printf(
+                        "[omp-gta-popcycle] Day section found before population type: %s",
+                        comment
+                    );
+                    fclose(file);
+                    return false;
+                }
+
+                currentDay = !strcmp(comment, "Weekday", true)
+                    ? GTA_POPCYCLE_WEEKDAY
+                    : GTA_POPCYCLE_WEEKEND;
+
+                if(loadedDays[_:currentType][_:currentDay]) {
+                    printf(
+                        "[omp-gta-popcycle] Duplicate day section: type=%d day=%d",
+                        _:currentType,
+                        _:currentDay
+                    );
+                    fclose(file);
+                    return false;
+                }
+
+                loadedDays[_:currentType][_:currentDay] = true;
                 currentSlot = 0;
             }
+
             continue;
         }
 
-        if(currentType == -1 || currentDay == -1)
-            continue;
-
-        if(currentSlot >= GTA_POPCYCLE_TIME_COUNT) {
-            printf("[omp-gta-popcycle] Too many rows: type=%d day=%d slot=%d", currentType, currentDay, currentSlot);
+        if(currentType == GTA_POPCYCLE_TYPE_UNKNOWN || currentDay == GTA_POPCYCLE_DAY_UNKNOWN) {
+            printf("[omp-gta-popcycle] Unexpected data outside a day section: %s", line);
             fclose(file);
             return false;
         }
 
-        if(!PopCycle_ParseRow(line, currentType, currentDay, currentSlot)) {
-            printf("[omp-gta-popcycle] Invalid row: type=%d day=%d slot=%d", currentType, currentDay, currentSlot);
+        if(currentSlot >= GTA_POPCYCLE_TIME_COUNT) {
+            printf("[omp-gta-popcycle] Too many rows: type=%d day=%d rows=%d", _:currentType, _:currentDay, currentSlot);
+            fclose(file);
+            return false;
+        }
+
+        if(!PopCycle_ParseRow(line, currentType, currentDay, E_GTA_POPCYCLE_TIME:currentSlot)) {
+            printf("[omp-gta-popcycle] Invalid row: type=%d day=%d slot=%d", _:currentType, _:currentDay, currentSlot);
             fclose(file);
             return false;
         }
 
         currentSlot++;
+        loadedRows++;
     }
 
     if(!PopCycle_ValidatePreviousDay(currentType, currentDay, currentSlot)) {
@@ -406,16 +425,27 @@ stock bool:LoadPopCycleDat() {
         return false;
     }
 
-    fclose(file);
+    if(loadedRows != GTA_POPCYCLE_ROW_COUNT) {
+        printf("[omp-gta-popcycle] Invalid total row count: rows=%d expected=%d", loadedRows, GTA_POPCYCLE_ROW_COUNT);
+        fclose(file);
+        return false;
+    }
 
-    /*
-    * Makes sure that all ped weights add up to 100%
-    */
-    PopCycle_NormalizeAllPedWeights();
+    for(new popType = 0; popType < GTA_POPCYCLE_TYPE_COUNT; popType++) {
+        for(new dayType = 0; dayType < GTA_POPCYCLE_DAY_TYPE_COUNT; dayType++) {
+            if(!loadedDays[popType][dayType]) {
+                printf("[omp-gta-popcycle] Missing day section: type=%d day=%d", popType, dayType);
+                fclose(file);
+                return false;
+            }
+        }
+    }
+
+    fclose(file);
 
     gPopCycleLoaded = true;
 
-    printf("[omp-gta-popcycle] Loaded %d rows.", GTA_POPCYCLE_TYPE_COUNT * GTA_POPCYCLE_DAY_COUNT *GTA_POPCYCLE_TIME_COUNT);
+    printf("[omp-gta-popcycle] Loaded %d rows.", loadedRows);
 
     return true;
 }
@@ -427,87 +457,109 @@ stock bool:IsPopCycleLoaded() {
 /*
 * Gets the population weight for a day type and time. Useful to figure out how many of certain peds, vehicles or groups types need to be spawned
 */
-stock GetPopCycleValue(popType, dayType, timeSlot, E_GTA_POPCYCLE_FIELD:field) {
-    if(popType < 0 || popType >= GTA_POPCYCLE_TYPE_COUNT)
+stock GetPopCycleValue(E_GTA_POPCYCLE_TYPE:popType, E_GTA_POPCYCLE_DAY_TYPE:dayType, E_GTA_POPCYCLE_TIME:timeSlot, E_GTA_POPCYCLE_VALUE:popValue) {
+    if(!gPopCycleLoaded)
         return -1;
 
-    if(dayType < 0 || dayType >= GTA_POPCYCLE_DAY_COUNT)
+    if(_:popType < 0 || _:popType >= GTA_POPCYCLE_TYPE_COUNT)
         return -1;
 
-    if(timeSlot < 0 || timeSlot >= GTA_POPCYCLE_TIME_COUNT)
+    if(_:dayType < 0 || _:dayType >= GTA_POPCYCLE_DAY_TYPE_COUNT)
         return -1;
 
-    if(_:field < 0 || _:field >= GTA_POPCYCLE_FIELD_COUNT)
+    if(_:timeSlot < 0 || _:timeSlot >= GTA_POPCYCLE_TIME_COUNT)
         return -1;
 
-    return gPopCycle[popType][dayType][timeSlot][field];
+    if(_:popValue < 0 || _:popValue >= GTA_POPCYCLE_VALUE_COUNT)
+        return -1;
+
+    return gPopCycle[_:popType][_:dayType][_:timeSlot][popValue];
 }
 
-stock GetPopCyclePeds(popType, dayType, timeSlot) {
-    return GetPopCycleValue(popType, dayType, timeSlot, PC_PEDS);
+stock GetPopCyclePeds(E_GTA_POPCYCLE_TYPE:popType, E_GTA_POPCYCLE_DAY_TYPE:dayType, E_GTA_POPCYCLE_TIME:timeSlot) {
+    return GetPopCycleValue(popType, dayType, timeSlot, GTA_POPCYCLE_VALUE_PEDS);
 }
 
-stock GetPopCycleCars(popType, dayType, timeSlot) {
-    return GetPopCycleValue(popType, dayType, timeSlot, PC_CARS);
+stock GetPopCycleCars(E_GTA_POPCYCLE_TYPE:popType, E_GTA_POPCYCLE_DAY_TYPE:dayType, E_GTA_POPCYCLE_TIME:timeSlot) {
+    return GetPopCycleValue(popType, dayType, timeSlot, GTA_POPCYCLE_VALUE_CARS);
 }
 
-stock GetPopCycleGroupPercentage(popType, dayType, timeSlot, E_GTA_POPCYCLE_FIELD:group) {
-    if(group < PC_WORKERS || group > PC_AIRCREW_RUNWAY)
+stock GetPopCycleGroupWeight(E_GTA_POPCYCLE_TYPE:popType, E_GTA_POPCYCLE_DAY_TYPE:dayType, E_GTA_POPCYCLE_TIME:timeSlot, E_GTA_POPCYCLE_VALUE:group) {
+    if(group < GTA_POPCYCLE_VALUE_WORKERS || group > GTA_POPCYCLE_VALUE_AIRCREW_RUNWAY)
         return -1;
 
     return GetPopCycleValue(popType, dayType, timeSlot, group);
 }
 
 /*
-* Gets the timeslot for popcycle functions. It GTA:SA simply makes a 12-hour clock
+* Gets the popcycle's timeslot. GTA:SA simply uses 2 hour slots
 */
-stock GetPopCycleTimeSlot(hour) {
+stock E_GTA_POPCYCLE_TIME:GetPopCycleTimeSlot(hour) {
     if(hour < 0)
-        hour = 0;
-    else if(hour > 23)
-        hour = 23;
+        return GTA_POPCYCLE_TIME_UNKNOWN;
+    if(hour > 23)
+        return GTA_POPCYCLE_TIME_UNKNOWN;
 
-    return hour / 2;
+    return E_GTA_POPCYCLE_TIME:(hour / 2);
 }
 
 /*
 * Recreation of CPopCycle::PickARandomGroupOfOtherPeds() from gta-reversed.
 * Selects one random population group based on day type and time
+* Uses the gta-reversed FIX_BUGS that does not need weights to not sum up to 100%
+* In GTA:SA there is another function that recalculates the weights, here we dropped that functionality
 */
-stock E_GTA_POPCYCLE_FIELD:GetRandomPopCyclePopulationGroup(popType, dayType, timeSlot) {
-    if(popType < 0 || popType >= GTA_POPCYCLE_TYPE_COUNT || dayType < 0 || dayType >= GTA_POPCYCLE_DAY_COUNT || timeSlot < 0 || timeSlot >= GTA_POPCYCLE_TIME_COUNT) {
-        return E_GTA_POPCYCLE_FIELD:-1;
+stock E_GTA_POPCYCLE_VALUE:GetRandomPopCyclePopulationGroup(E_GTA_POPCYCLE_TYPE:popType, E_GTA_POPCYCLE_DAY_TYPE:dayType, E_GTA_POPCYCLE_TIME:timeSlot) {
+    if(!gPopCycleLoaded)
+        return GTA_POPCYCLE_VALUE_UNKNOWN;
+
+    if(_:popType < 0 || _:popType >= GTA_POPCYCLE_TYPE_COUNT)
+        return GTA_POPCYCLE_VALUE_UNKNOWN;
+
+    if(_:dayType < 0 || _:dayType >= GTA_POPCYCLE_DAY_TYPE_COUNT)
+        return GTA_POPCYCLE_VALUE_UNKNOWN;
+
+    if(_:timeSlot < 0 || _:timeSlot >= GTA_POPCYCLE_TIME_COUNT)
+        return GTA_POPCYCLE_VALUE_UNKNOWN;
+
+    new total = 0;
+
+    for(new E_GTA_POPCYCLE_VALUE:group = GTA_POPCYCLE_VALUE_WORKERS; group <= GTA_POPCYCLE_VALUE_AIRCREW_RUNWAY; group++) {
+        new weight = gPopCycle[_:popType][_:dayType][_:timeSlot][group];
+
+        if(weight > 0)
+            total += weight;
     }
 
-    new value = random(100);
+    if(total <= 0)
+        return GTA_POPCYCLE_VALUE_UNKNOWN;
 
-    for(new E_GTA_POPCYCLE_FIELD:group = PC_WORKERS; group <= PC_AIRCREW_RUNWAY; group++) {
-        new weight = gPopCycle[popType][dayType][timeSlot][group];
+    new value = random(total);
 
-        if(weight <= 0) {
+    for(new E_GTA_POPCYCLE_VALUE:group = GTA_POPCYCLE_VALUE_WORKERS; group <= GTA_POPCYCLE_VALUE_AIRCREW_RUNWAY; group++) {
+        new weight = gPopCycle[_:popType][_:dayType][_:timeSlot][group];
+
+        if(weight <= 0)
             continue;
-        }
 
-        if(value < weight) {
+        if(value < weight)
             return group;
-        }
 
         value -= weight;
     }
 
-    return E_GTA_POPCYCLE_FIELD:-1;
+    return GTA_POPCYCLE_VALUE_UNKNOWN;
 }
-
 
 /*
 * Recreation of GTA CPopCycle::Update() from gta-reversed, sort of.
-* Getsthe day type based on gta-reversed logic by using the internal day name and the hour
+* Gets the day type based on gta-reversed logic by using the internal day name and the hour
 */
-stock GetPopCycleDayType(hour) {
+stock E_GTA_POPCYCLE_DAY_TYPE:GetPopCycleDayType(hour) {
     if(hour < 0)
-        return -1;
+        return GTA_POPCYCLE_DAY_UNKNOWN;
     if(hour > 23)
-        return -1;
+        return GTA_POPCYCLE_DAY_UNKNOWN;
 
     /*
     *
@@ -525,7 +577,7 @@ stock GetPopCycleDayType(hour) {
     *     before 20:00 -> weekend
     *     from   20:00 -> weekday
     */
-    switch(_:gPopulationDayOfWeek) {
+    switch(_:gPopCycleDayOfWeek) {
         case (_:GTA_POPCYCLE_DAY_FRIDAY): {
             if (hour >= 20) {
                 return GTA_POPCYCLE_WEEKEND;
@@ -548,7 +600,7 @@ stock GetPopCycleDayType(hour) {
 
 
 /*
-* Detects if the day needs to changed and updates the day in case clock has been manually set to forward in time
+* Updates the current day when the game clock wraps at midnight
 */
 forward bool:GTAPopCycle_UpdateHour(hour);
 public bool:GTAPopCycle_UpdateHour(hour) {
@@ -556,33 +608,33 @@ public bool:GTAPopCycle_UpdateHour(hour) {
         return false;
     }
 
-    if(gPopulationLastHour == -1) {
-        gPopulationLastHour = hour;
+    if(gPopCycleLastHour == -1) {
+        gPopCycleLastHour = hour;
         return true;
     }
 
-    if(hour < gPopulationLastHour) {
-        if(gPopulationDayOfWeek == GTA_POPCYCLE_DAY_SUNDAY) {
-            gPopulationDayOfWeek = GTA_POPCYCLE_DAY_MONDAY;
+    if(hour < gPopCycleLastHour) {
+        if(gPopCycleDayOfWeek == GTA_POPCYCLE_DAY_SUNDAY) {
+            gPopCycleDayOfWeek = GTA_POPCYCLE_DAY_MONDAY;
         } else {
-            gPopulationDayOfWeek = E_GTA_POPULATION_DAY:(_:gPopulationDayOfWeek + 1);
+            gPopCycleDayOfWeek = E_GTA_POPCYCLE_DAY:(_:gPopCycleDayOfWeek + 1);
         }
     }
 
-    gPopulationLastHour = hour;
+    gPopCycleLastHour = hour;
     return true;
 }
 
 /*
 * Sets a specific day of the week. Affects what kind of population group is selected
 */
-stock bool:SetPopCycleDayOfWeek(E_GTA_POPULATION_DAY:day) {
+stock bool:SetPopCycleDayOfWeek(E_GTA_POPCYCLE_DAY:day) {
     if(day < GTA_POPCYCLE_DAY_MONDAY || day > GTA_POPCYCLE_DAY_SUNDAY) {
         return false;
     }
 
-    gPopulationDayOfWeek = day;
-    gPopulationLastHour = -1;
+    gPopCycleDayOfWeek = day;
+    gPopCycleLastHour = -1;
 
     return true;
 }
@@ -590,6 +642,227 @@ stock bool:SetPopCycleDayOfWeek(E_GTA_POPULATION_DAY:day) {
 /*
 * Gets the current day of the week
 */
-stock E_GTA_POPULATION_DAY:GetPopCycleDayOfWeek() {
-    return gPopulationDayOfWeek;
+stock E_GTA_POPCYCLE_DAY:GetPopCycleDayOfWeek() {
+    return gPopCycleDayOfWeek;
+}
+
+/*
+* Tests loaded popcycle.dat
+* TestPopCycle(); - Tests all 480 rows.
+* TestPopCycle(GTA_POPCYCLE_TYPE_BUSINESS); - Tests all BUSINESS rows.
+* TestPopCycle(GTA_POPCYCLE_TYPE_BUSINESS, GTA_POPCYCLE_WEEKDAY); - Tests all BUSINESS weekday rows.
+* TestPopCycle(GTA_POPCYCLE_TYPE_BUSINESS, GTA_POPCYCLE_WEEKDAY, GTA_POPCYCLE_08_00); - Tests one specific row.
+*/
+stock bool:TestPopCycle(E_GTA_POPCYCLE_TYPE:filterType = GTA_POPCYCLE_TYPE_UNKNOWN, E_GTA_POPCYCLE_DAY_TYPE:filterDay = GTA_POPCYCLE_DAY_UNKNOWN, E_GTA_POPCYCLE_TIME:filterTime = GTA_POPCYCLE_TIME_UNKNOWN) {
+    static const PopCycleValueNames[][32] = {
+        "Peds",
+        "Cars",
+        "Dealers",
+        "Gang",
+        "Cops",
+        "Other",
+        "Workers",
+        "Business",
+        "Clubbers",
+        "Farmers",
+        "Beachfolk",
+        "Parkfolk",
+        "CasualRich",
+        "CasualAverage",
+        "CasualPoor",
+        "Prostitutes",
+        "Criminals",
+        "Golfers",
+        "Servants",
+        "Aircrew",
+        "Entertainers",
+        "OutOfTownFactory",
+        "Desertfolk",
+        "AircrewRunway"
+    };
+
+    if(filterType != GTA_POPCYCLE_TYPE_UNKNOWN && (_:filterType < 0 || _:filterType >= GTA_POPCYCLE_TYPE_COUNT)) {
+        printf("[omp-gta-popcycle] ERROR: Invalid population type %d.", _:filterType);
+        return false;
+    }
+
+    if(filterDay != GTA_POPCYCLE_DAY_UNKNOWN && (_:filterDay < 0 || _:filterDay >= GTA_POPCYCLE_DAY_TYPE_COUNT)) {
+        printf("[omp-gta-popcycle] ERROR: Invalid day type %d.", _:filterDay);
+        return false;
+    }
+
+    if(filterTime != GTA_POPCYCLE_TIME_UNKNOWN && (_:filterTime < 0 || _:filterTime >= GTA_POPCYCLE_TIME_COUNT)) {
+        printf("[omp-gta-popcycle] ERROR: Invalid time slot %d.", _:filterTime);
+        return false;
+    }
+
+    new expectedRows = 1;
+
+    if(filterType == GTA_POPCYCLE_TYPE_UNKNOWN)
+        expectedRows *= GTA_POPCYCLE_TYPE_COUNT;
+
+    if(filterDay == GTA_POPCYCLE_DAY_UNKNOWN)
+        expectedRows *= GTA_POPCYCLE_DAY_TYPE_COUNT;
+
+    if(filterTime == GTA_POPCYCLE_TIME_UNKNOWN)
+        expectedRows *= GTA_POPCYCLE_TIME_COUNT;
+
+    printf("[omp-gta-popcycle] ============================================================");
+    printf("[omp-gta-popcycle] POPCYCLE DATA TEST");
+    printf("[omp-gta-popcycle] Filter: type=%d day=%d time=%d", _:filterType, _:filterDay, _:filterTime);
+    printf("[omp-gta-popcycle] Expected rows: %d", expectedRows);
+    printf("[omp-gta-popcycle] ============================================================");
+
+    new totalRows = 0;
+    new invalidRows = 0;
+    new invalidValues = 0;
+
+    new below100Rows = 0;
+    new exact100Rows = 0;
+    new above100Rows = 0;
+
+    new minimumGroupTotal = 0x7FFFFFFF;
+    new maximumGroupTotal = 0;
+
+    new minimumValue[GTA_POPCYCLE_VALUE_COUNT];
+    new maximumValue[GTA_POPCYCLE_VALUE_COUNT];
+
+    for(new value = _:GTA_POPCYCLE_VALUE_PEDS; value <= _:GTA_POPCYCLE_VALUE_AIRCREW_RUNWAY; value++) {
+        minimumValue[value] = 0x7FFFFFFF;
+        maximumValue[value] = 0;
+    }
+
+    for(new popType = 0; popType < GTA_POPCYCLE_TYPE_COUNT; popType++) {
+        if(filterType != GTA_POPCYCLE_TYPE_UNKNOWN && popType != _:filterType) {
+            continue;
+        }
+
+        for(new dayType = 0; dayType < GTA_POPCYCLE_DAY_TYPE_COUNT; dayType++) {
+            if(filterDay != GTA_POPCYCLE_DAY_UNKNOWN && dayType != _:filterDay) {
+                continue;
+            }
+
+            for(new timeSlot = 0; timeSlot < GTA_POPCYCLE_TIME_COUNT; timeSlot++) {
+                if(filterTime != GTA_POPCYCLE_TIME_UNKNOWN && timeSlot != _:filterTime) {
+                    continue;
+                }
+
+                new E_GTA_POPCYCLE_TYPE:type = E_GTA_POPCYCLE_TYPE:popType;
+                new E_GTA_POPCYCLE_DAY_TYPE:day = E_GTA_POPCYCLE_DAY_TYPE:dayType;
+                new E_GTA_POPCYCLE_TIME:time = E_GTA_POPCYCLE_TIME:timeSlot;
+                new values[GTA_POPCYCLE_VALUE_COUNT];
+                new groupTotal = 0;
+                new bool:rowValid = true;
+
+                for(new value = _:GTA_POPCYCLE_VALUE_PEDS; value <= _:GTA_POPCYCLE_VALUE_AIRCREW_RUNWAY; value++) {
+                    new E_GTA_POPCYCLE_VALUE:popValue = E_GTA_POPCYCLE_VALUE:value;
+
+                    values[value] = GetPopCycleValue(type, day, time, popValue);
+
+                    if(values[value] < 0) {
+                        printf("[omp-gta-popcycle] ERROR: type=%d day=%d time=%d value=%d (%s) returned %d", popType, dayType, timeSlot, value, PopCycleValueNames[value], values[value]);
+
+                        invalidValues++;
+                        rowValid = false;
+                        continue;
+                    }
+
+                    if(values[value] < minimumValue[value])
+                        minimumValue[value] = values[value];
+
+                    if(values[value] > maximumValue[value])
+                        maximumValue[value] = values[value];
+
+                    if(value >= _:GTA_POPCYCLE_VALUE_WORKERS && value <= _:GTA_POPCYCLE_VALUE_AIRCREW_RUNWAY) {
+                        groupTotal += values[value];
+                    }
+                }
+
+                printf("[omp-gta-popcycle] ROW type=%02d day=%d time=%02d", popType, dayType, timeSlot);
+
+                for(new value = _:GTA_POPCYCLE_VALUE_PEDS; value <= _:GTA_POPCYCLE_VALUE_AIRCREW_RUNWAY; value++) {
+                    printf("[omp-gta-popcycle] [%02d] %-16s = %d", value, PopCycleValueNames[value], values[value]);
+                }
+
+                printf("[omp-gta-popcycle] Population group total = %d", groupTotal);
+
+                if(GetPopCyclePeds(type, day, time) != values[_:GTA_POPCYCLE_VALUE_PEDS]) {
+                    printf("[omp-gta-popcycle] ERROR: GetPopCyclePeds mismatch type=%d day=%d time=%d", popType, dayType, timeSlot);
+                    rowValid = false;
+                }
+
+                if(GetPopCycleCars(type, day, time) != values[_:GTA_POPCYCLE_VALUE_CARS]) {
+                    printf("[omp-gta-popcycle] ERROR: GetPopCycleCars mismatch type=%d day=%d time=%d", popType, dayType, timeSlot);
+                    rowValid = false;
+                }
+
+                for(new group = _:GTA_POPCYCLE_VALUE_WORKERS; group <= _:GTA_POPCYCLE_VALUE_AIRCREW_RUNWAY; group++) {
+                    new E_GTA_POPCYCLE_VALUE:popGroup = E_GTA_POPCYCLE_VALUE:group;
+
+                    if(GetPopCycleGroupWeight(type, day, time, popGroup) != values[group]) {
+                        printf("[omp-gta-popcycle] ERROR: Group getter mismatch type=%d day=%d time=%d group=%d (%s)", popType, dayType, timeSlot, group, PopCycleValueNames[group]);
+                        rowValid = false;
+                    }
+                }
+
+                /*
+                * Using gta-reversed FIX_BUGS, weights do not need to add up to 100%
+                */
+                if(groupTotal <= 0) {
+                    printf("[omp-gta-popcycle] ERROR: type=%d day=%d time=%d has group total %d", popType, dayType, timeSlot, groupTotal);
+                    rowValid = false;
+                } else if(groupTotal < 100) {
+                    below100Rows++;
+                } else if(groupTotal == 100) {
+                    exact100Rows++;
+                } else {
+                    above100Rows++;
+                }
+
+                if(groupTotal < minimumGroupTotal)
+                    minimumGroupTotal = groupTotal;
+
+                if(groupTotal > maximumGroupTotal)
+                    maximumGroupTotal = groupTotal;
+
+                if(!rowValid)
+                    invalidRows++;
+
+                totalRows++;
+            }
+        }
+    }
+
+    printf("[omp-gta-popcycle] ============================================================");
+    printf("[omp-gta-popcycle] COLUMN RANGES");
+    printf("[omp-gta-popcycle] ============================================================");
+
+    for(new value = _:GTA_POPCYCLE_VALUE_PEDS; value <= _:GTA_POPCYCLE_VALUE_AIRCREW_RUNWAY; value++) {
+        printf("[omp-gta-popcycle] [%02d] %-16s min=%d max=%d", value, PopCycleValueNames[value], minimumValue[value], maximumValue[value]);
+    }
+
+    printf("[omp-gta-popcycle] ============================================================");
+    printf("[omp-gta-popcycle] VALIDATION RESULTS");
+    printf("[omp-gta-popcycle] ============================================================");
+    printf("[omp-gta-popcycle] Rows checked:             %d / %d", totalRows, expectedRows);
+    printf("[omp-gta-popcycle] Group totals below 100:   %d", below100Rows);
+    printf("[omp-gta-popcycle] Group totals exactly 100: %d", exact100Rows);
+    printf("[omp-gta-popcycle] Group totals above 100:   %d", above100Rows);
+    printf("[omp-gta-popcycle] Minimum group total:      %d", minimumGroupTotal);
+    printf("[omp-gta-popcycle] Maximum group total:      %d", maximumGroupTotal);
+    printf("[omp-gta-popcycle] Invalid values:           %d", invalidValues);
+    printf("[omp-gta-popcycle] Invalid rows:             %d", invalidRows);
+    printf("[omp-gta-popcycle] ============================================================");
+
+    new bool:passed = (totalRows == expectedRows && invalidValues == 0 && invalidRows == 0);
+
+    if(passed) {
+        printf("[omp-gta-popcycle] PASS: All %d selected rows passed validation.", totalRows);
+    } else {
+        printf("[omp-gta-popcycle] FAIL: Popcycle validation errors detected.");
+    }
+
+    printf("[omp-gta-popcycle] ============================================================");
+
+    return passed;
 }
