@@ -647,6 +647,17 @@ stock E_GTA_POPCYCLE_DAY:GetPopCycleDayOfWeek() {
 }
 
 /*
+* Returns the ped population group index for a popcycle value.
+*/
+stock GetPopCyclePedCategoryIndex(E_GTA_POPCYCLE_VALUE:category) {
+    if(category < GTA_POPCYCLE_VALUE_WORKERS || category > GTA_POPCYCLE_VALUE_AIRCREW_RUNWAY)  {
+        return -1;
+    }
+
+    return _:category - _:GTA_POPCYCLE_VALUE_WORKERS;
+}
+
+/*
 * Tests loaded popcycle.dat
 * TestPopCycle(); - Tests all 480 rows.
 * TestPopCycle(GTA_POPCYCLE_TYPE_BUSINESS); - Tests all BUSINESS rows.
